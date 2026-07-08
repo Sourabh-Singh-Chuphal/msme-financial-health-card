@@ -1,0 +1,15 @@
+{
+  "msme_id": "MSME_000118",
+  "persona_type": "risky_declining",
+  "business_type": "services",
+  "sources_available": [
+    "gst",
+    "upi",
+    "aa",
+    "epfo"
+  ],
+  "generation_seed": 42,
+  "rng_salt": 118,
+  "window_start": "2025-07-01",
+  "window_end": "2026-06-30"
+}

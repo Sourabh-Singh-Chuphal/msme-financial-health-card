@@ -1,0 +1,13 @@
+{
+  "msme_id": "MSME_000047",
+  "persona_type": "healthy_ntc",
+  "business_type": "services",
+  "sources_available": [
+    "upi",
+    "aa"
+  ],
+  "generation_seed": 42,
+  "rng_salt": 47,
+  "window_start": "2025-07-01",
+  "window_end": "2026-06-30"
+}

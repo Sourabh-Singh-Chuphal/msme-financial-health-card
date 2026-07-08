@@ -1,0 +1,15 @@
+{
+  "msme_id": "MSME_000020",
+  "persona_type": "healthy_established",
+  "business_type": "services",
+  "sources_available": [
+    "gst",
+    "upi",
+    "aa",
+    "epfo"
+  ],
+  "generation_seed": 42,
+  "rng_salt": 20,
+  "window_start": "2025-07-01",
+  "window_end": "2026-06-30"
+}

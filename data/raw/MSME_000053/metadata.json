@@ -1,0 +1,13 @@
+{
+  "msme_id": "MSME_000053",
+  "persona_type": "healthy_ntc",
+  "business_type": "retail",
+  "sources_available": [
+    "gst",
+    "upi"
+  ],
+  "generation_seed": 42,
+  "rng_salt": 53,
+  "window_start": "2025-07-01",
+  "window_end": "2026-06-30"
+}

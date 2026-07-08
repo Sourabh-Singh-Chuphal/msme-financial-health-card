@@ -1,0 +1,13 @@
+{
+  "msme_id": "MSME_000056",
+  "persona_type": "healthy_ntc",
+  "business_type": "manufacturing",
+  "sources_available": [
+    "gst",
+    "aa"
+  ],
+  "generation_seed": 42,
+  "rng_salt": 56,
+  "window_start": "2025-07-01",
+  "window_end": "2026-06-30"
+}

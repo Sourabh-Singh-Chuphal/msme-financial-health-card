@@ -1,0 +1,7 @@
+# Weights for the MSME Rule-Based Scorer
+# Must sum to 1.0
+stability: 0.15
+cashflow: 0.25
+compliance: 0.15
+growth: 0.15
+repayment: 0.30

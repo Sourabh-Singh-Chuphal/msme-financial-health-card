@@ -1,0 +1,15 @@
+{
+  "msme_id": "MSME_000177",
+  "persona_type": "seasonal_business",
+  "business_type": "retail",
+  "sources_available": [
+    "gst",
+    "upi",
+    "aa",
+    "epfo"
+  ],
+  "generation_seed": 42,
+  "rng_salt": 177,
+  "window_start": "2025-07-01",
+  "window_end": "2026-06-30"
+}
