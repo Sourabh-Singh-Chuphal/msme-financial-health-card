@@ -184,7 +184,7 @@ def main() -> None:
         /* Hide Streamlit default components to make it look like a custom enterprise portal */
         #MainMenu {visibility: hidden !important;}
         footer {visibility: hidden !important;}
-        header[data-testid="stHeader"] {display: none !important;}
+        header[data-testid="stHeader"] {background-color: transparent !important;}
         div[data-testid="stDecoration"] {display: none !important;}
         button[title="View source code"] {display: none !important;}
         .stDeployButton {display: none !important;}
