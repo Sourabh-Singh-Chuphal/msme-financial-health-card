@@ -150,17 +150,16 @@ export default function App() {
             >
               Learn More
             </motion.button>
-            <motion.button 
+            <motion.a
+              href={DASHBOARD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               whileTap={{ scale: 0.97 }}
-              onClick={() => {
-                // Redirect user to the Streamlit underwriter dashboard
-                window.open(DASHBOARD_URL, '_blank');
-              }}
-              className="px-5 py-2.5 bg-[#111111] hover:bg-[#222222] text-[#FFFFFF] rounded-full text-xs font-semibold tracking-wide uppercase shadow-subtle-card inline-flex items-center gap-2 group transition-all"
+              className="px-5 py-2.5 bg-[#111111] hover:bg-[#222222] text-[#FFFFFF] rounded-full text-xs font-semibold tracking-wide uppercase shadow-subtle-card inline-flex items-center gap-2 group transition-all no-underline"
             >
               Launch Console
               <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </motion.button>
+            </motion.a>
           </div>
         </div>
       </header>
@@ -203,14 +202,16 @@ export default function App() {
             transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <motion.button 
+            <motion.a
+              href={DASHBOARD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               whileTap={{ scale: 0.97 }}
-              onClick={() => window.open(DASHBOARD_URL, '_blank')}
-              className="w-full sm:w-auto px-7 py-3 bg-[#111111] hover:bg-[#222222] text-white rounded-full text-sm font-semibold tracking-wide uppercase shadow-subtle-card flex justify-center items-center gap-2 group transition-all"
+              className="w-full sm:w-auto px-7 py-3 bg-[#111111] hover:bg-[#222222] text-white rounded-full text-sm font-semibold tracking-wide uppercase shadow-subtle-card flex justify-center items-center gap-2 group transition-all no-underline"
             >
               Access Platform
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+            </motion.a>
             
             <button 
               onClick={() => setActiveModal('methodology')}
