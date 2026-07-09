@@ -20,6 +20,7 @@ import streamlit as st
 import requests
 import plotly.graph_objects as go
 import numpy as np
+import os
 
 # Page configuration
 st.set_page_config(
@@ -29,8 +30,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# API Endpoint Config
-API_BASE_URL = "http://localhost:8000"
+# API Endpoint Config — defaults to the hosted Render backend so cloud deploys work out-of-the-box
+API_BASE_URL = os.getenv("API_BASE_URL", "https://msme-financial-health-card-1.onrender.com")
 
 # Persona metadata mappings
 PERSONA_LABELS = {
@@ -91,10 +92,14 @@ def load_msme_cohort() -> dict[str, list[tuple[str, str, str]]]:
 # Backend API Calls
 # ---------------------------------------------------------------------------
 
-def check_backend_liveness() -> bool:
-    """Checks if the FastAPI server is reachable."""
+def check_backend_liveness(timeout: float = 15.0) -> bool:
+    """Checks if the FastAPI server is reachable.
+    
+    Uses a longer timeout to handle Render free-tier cold starts
+    (the service may be sleeping and needs ~10-15 s to wake up).
+    """
     try:
-        resp = requests.get(f"{API_BASE_URL}/health", timeout=1.0)
+        resp = requests.get(f"{API_BASE_URL}/health", timeout=timeout)
         return resp.status_code == 200
     except requests.exceptions.RequestException:
         return False
@@ -110,7 +115,7 @@ def get_credit_score_and_explain(msme_id: str) -> tuple[dict | None, dict | None
         consent_resp = requests.post(
             f"{API_BASE_URL}/consent",
             json={"msme_id": msme_id, "data_sources": ["gst", "upi", "aa", "epfo"]},
-            timeout=2.0
+            timeout=30.0
         )
         if consent_resp.status_code != 200:
             return None, None, f"Consent Handshake Failed: {consent_resp.json().get('detail', 'Unknown error')}"
@@ -118,12 +123,12 @@ def get_credit_score_and_explain(msme_id: str) -> tuple[dict | None, dict | None
         token = consent_resp.json()["consent_token"]
 
         # 2. Fetch Score
-        score_resp = requests.get(f"{API_BASE_URL}/score/{msme_id}?consent_token={token}", timeout=3.0)
+        score_resp = requests.get(f"{API_BASE_URL}/score/{msme_id}?consent_token={token}", timeout=30.0)
         if score_resp.status_code != 200:
             return None, None, f"Scoring Engine Error: {score_resp.json().get('detail', 'Unknown error')}"
 
         # 3. Fetch Explanation
-        explain_resp = requests.get(f"{API_BASE_URL}/explain/{msme_id}?consent_token={token}", timeout=3.0)
+        explain_resp = requests.get(f"{API_BASE_URL}/explain/{msme_id}?consent_token={token}", timeout=30.0)
         if explain_resp.status_code != 200:
             return None, None, f"Explainability Engine Error: {explain_resp.json().get('detail', 'Unknown error')}"
 
@@ -315,12 +320,25 @@ def main() -> None:
         unsafe_allow_html=True
     )
 
-    # 1. Liveness check
-    backend_active = check_backend_liveness()
+    # 1. Liveness check — Render free tier may be cold-starting; show spinner while waiting
+    with st.spinner("🔄 Connecting to credit scoring engine… (may take up to 30 s on first load)"):
+        backend_active = check_backend_liveness(timeout=30.0)
+
     if not backend_active:
-        st.error("🚨 **FastAPI Backend Offline**")
+        st.error(
+            "🚨 **Credit Scoring Backend Unreachable**  \n"
+            f"Attempted to connect to: `{API_BASE_URL}`"
+        )
+        st.warning(
+            "The backend may still be waking up (Render free tier spins down after inactivity). "
+            "**Please wait 30 seconds and click Retry.**"
+        )
+        col_retry, _ = st.columns([1, 3])
+        with col_retry:
+            if st.button("🔄 Retry Connection", type="primary", use_container_width=True):
+                st.rerun()
         st.info(
-            "Please start the credit scoring backend service in your terminal before running this dashboard:\n\n"
+            "**Local development?** Set the `API_BASE_URL` environment variable and run:\n"
             "```bash\n"
             "uvicorn src.api.main:app --port 8000 --reload\n"
             "```"
