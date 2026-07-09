@@ -23,9 +23,9 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  // Environment-configurable URLs (set VITE_API_BASE_URL and VITE_DASHBOARD_URL in .env or hosting platform)
-  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
-  const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || 'http://localhost:8501';
+  // Production URLs — hardcoded as fallback to guarantee correct routing on Vercel
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://msme-financial-health-card-1.onrender.com';
+  const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || 'https://msme-financial-health-card-cgjnkyrsatefgqvbsmg2gg.streamlit.app/';
 
   const [isAssembled, setIsAssembled] = useState(false);
   const [selectedDemoMsme, setSelectedDemoMsme] = useState('NTC');
