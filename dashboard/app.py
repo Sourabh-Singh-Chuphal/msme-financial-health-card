@@ -176,7 +176,7 @@ def main() -> None:
             color: #17181C !important;
             font-weight: 700 !important;
         }
-        [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] caption {
+        [data-testid="stSidebar"] p, [data-testid="stSidebar"] label, [data-testid="stSidebar"] caption {
             font-family: 'Inter', sans-serif !important;
             color: #17181C !important;
         }
